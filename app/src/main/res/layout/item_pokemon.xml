@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <RelativeLayout
+            android:background="#fc503c"
+            android:id="@+id/pokemon_card"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@id/pokemon_sprite"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/pokemon_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="006"
+                android:textStyle="bold"
+                android:layout_marginStart="137dp"
+                android:textColor="@color/white"
+                />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/pokemon_sprite"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/charizard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/pokemon_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/pokemon_sprite"
+            android:text="Charizard"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginStart="16dp"
+            android:layout_above="@id/pokemon_card"
+            />
+
+
+
+        <ImageView
+            android:id="@+id/pokemon_type_slot1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/type_fire"
+            />
+
+        <ImageView
+            android:id="@+id/pokemon_type_slot2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/type_flying"
+            />
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
