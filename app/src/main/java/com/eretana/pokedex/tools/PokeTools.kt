@@ -4,7 +4,7 @@ class StringTools {
     companion object{
         @JvmStatic
         fun toPokemonOrderFormat(order: Int): String {
-            return String.format("%04d", order)
+            return String.format("#%04d", order)
         }
     }
 }
