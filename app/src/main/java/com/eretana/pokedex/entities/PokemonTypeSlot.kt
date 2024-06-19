@@ -29,7 +29,7 @@ data class PokemonType(val name: String){
         if (name.equals("rock")){ return R.string.type_rock}
         if (name.equals("steel")){ return R.string.type_steel}
         if (name.equals("water")){ return R.string.type_water}
-        return R.drawable.type_normal;
+        return R.string.type_normal;
     }
 
     fun getTypeColor(): String{

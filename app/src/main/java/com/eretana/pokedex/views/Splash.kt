@@ -11,12 +11,13 @@ import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import com.eretana.pokedex.R
 
 class Splash : ComponentActivity() {
 
-    private var justOpen = true
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +38,10 @@ class Splash : ComponentActivity() {
         return checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestPostNotificationsPermission() {
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-            data = Uri.fromParts("package", packageName, null)
-        }
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),100)
     }
 
     private fun gotoHome(){
@@ -53,18 +52,17 @@ class Splash : ComponentActivity() {
         },3000);
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    override fun onResume() {
-        super.onResume()
-        if(checkPermission()){
-            requestPostNotificationsPermission()
-        }else if (!justOpen){
-            gotoHome()
+
+    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)} passing\n      in a {@link RequestMultiplePermissions} object for the {@link ActivityResultContract} and\n      handling the result in the {@link ActivityResultCallback#onActivityResult(Object) callback}.")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == 100){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                gotoHome()
+            }else{
+                this.finish()
+            }
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        justOpen = false
-    }
 }

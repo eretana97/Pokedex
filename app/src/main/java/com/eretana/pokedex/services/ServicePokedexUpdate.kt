@@ -1,19 +1,15 @@
 package com.eretana.pokedex.services
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import android.provider.Settings
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -112,15 +108,7 @@ class ServicePokedexUpdate : Service() {
 
             appDatabase.pokemonDAO().insertAll(detailedPokemonList)
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-                if(checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED){
-                    showDownloadSuccessNotification()
-                }else{
-                    requestPostNotificationsPermission()
-                }
-            }else{
-                showDownloadSuccessNotification()
-            }
+            showDownloadSuccessNotification()
 
         }
 
@@ -168,11 +156,5 @@ class ServicePokedexUpdate : Service() {
     }
 
 
-    private fun requestPostNotificationsPermission() {
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-            data = Uri.fromParts("package", packageName, null)
-        }
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
-    }
+
 }
