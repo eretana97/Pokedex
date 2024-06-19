@@ -20,10 +20,8 @@ import androidx.core.app.NotificationManagerCompat
 import com.eretana.pokedex.R
 import com.eretana.pokedex.api.RetrofitBuilder
 import com.eretana.pokedex.localdb.RoomDB
-import com.eretana.pokedex.entities.Pokemon
 import com.eretana.pokedex.entities.PokemonResultItem
 import com.eretana.pokedex.entities.PokemonResult
-import com.eretana.pokedex.tools.StringTools
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -83,17 +81,18 @@ class ServicePokedexUpdate : Service() {
                         if(response.body() != null) {
                             val pokemonsItems : List<PokemonResultItem> = response.body()!!.results
                             fetchPokemonDetails(pokemonsItems)
+                            Log.d("SERVICE","POKEMON SIZE: " + pokemonsItems.size + " FIRST: " + pokemonsItems.first().name + " LAST: " + pokemonsItems.last().name)
                         }
-                        limit += 10
                         offset += 10
+
                     }
 
                     override fun onFailure(p0: Call<PokemonResult>, p1: Throwable) {
-                        Log.e("SERVICE_ERROR",p1.localizedMessage)
+                        showDownloadFailureNotification()
                     }
                 })
             }catch (e: Exception){
-
+                showDownloadFailureNotification()
             }
         }
     }
@@ -106,6 +105,7 @@ class ServicePokedexUpdate : Service() {
                 if(response.isSuccessful){
                     response.body()
                 }else{
+                    showDownloadFailureNotification()
                     null
                 }
             }.filterNotNull()
@@ -114,12 +114,12 @@ class ServicePokedexUpdate : Service() {
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
                 if(checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED){
-                    showNotification()
+                    showDownloadSuccessNotification()
                 }else{
                     requestPostNotificationsPermission()
                 }
             }else{
-                showNotification()
+                showDownloadSuccessNotification()
             }
 
         }
@@ -128,8 +128,8 @@ class ServicePokedexUpdate : Service() {
 
     private fun createNotificationChannel(){
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.O){
-            val name = "Canal de notificaciones Pokedex"
-            var description = "Canal para notificacion de nuevos pokemons"
+            val name = context.getString(R.string.notification_channel_name)
+            var description = context.getString(R.string.notification_channel_description)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANEL_ID, name, importance).apply {
                 description = description
@@ -141,11 +141,11 @@ class ServicePokedexUpdate : Service() {
     }
 
     @SuppressLint("MissingPermission")
-    private fun showNotification(){
+    private fun showDownloadSuccessNotification(){
         val builder = NotificationCompat.Builder(this,CHANEL_ID)
             .setSmallIcon(R.drawable.pokeball_icon)
-            .setContentTitle("Nuevos pokemons disponibles")
-            .setContentText("Nuevos pokemons disponibles")
+            .setContentTitle(context.getString(R.string.download_success))
+            .setContentText(context.getString(R.string.notification_success_text))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true)
 
@@ -153,6 +153,20 @@ class ServicePokedexUpdate : Service() {
             notify(NOTIFICATION_ID,builder.build())
         }
     }
+
+    @SuppressLint("MissingPermission")
+    private fun showDownloadFailureNotification(){
+        val builder = NotificationCompat.Builder(this,CHANEL_ID)
+            .setSmallIcon(R.drawable.ic_network_error)
+            .setContentTitle(context.getString(R.string.network_error))
+            .setContentText(context.getString(R.string.dowload_error))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
+        with(NotificationManagerCompat.from(context)){
+            notify(NOTIFICATION_ID,builder.build())
+        }
+    }
+
 
     private fun requestPostNotificationsPermission() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {

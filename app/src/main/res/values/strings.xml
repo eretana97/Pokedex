@@ -1,8 +1,41 @@
 <resources>
-    <string name="app_name">Pokedex</string>
-    <string name="title_activity_splash">Splash</string>
+    <string name="app_name">PokedexApp</string>
+    <string name="title_activity_splash">PokedexApp</string>
     <string name="title_activity_home">Home</string>
 
     <string name="loading">Loading...</string>
+    <string name="download">Downloading new pokemons...</string>
+    <string name="dowload_error">An error occurred when downloading new pokemons</string>
+    <string name="notification_channel_name">PokedexApp Notification Channel</string>
+    <string name="notification_channel_description">Channel that notifies new pokemon downloaded in local memory</string>
+    <string name="download_success">Successful download!</string>
+    <string name="notification_success_text">There are new pokemons available!</string>
+    <string name="network_error">Connection error!</string>
+    <string name="ok">OK</string>
+    <string name="search_hint">Search pokemon by name…</string>
+    <string name="clear_filter">Clear filter</string>
+    <string name="pokemon_not_found">The pokemon you are looking for was not found</string>
+    <string name="error_alert_title">Oops! An error occurred</string>
+
+
+    <!--POKEMON TYPES-->
+    <string name="type_bug">Bug</string>
+    <string name="type_dark">Dark</string>
+    <string name="type_dragon">Dragon</string>
+    <string name="type_electric">Electric</string>
+    <string name="type_fairy">Fairy</string>
+    <string name="type_fighting">Fighting</string>
+    <string name="type_fire">Fire</string>
+    <string name="type_flying">Flying</string>
+    <string name="type_ghost">Ghost</string>
+    <string name="type_grass">Grass</string>
+    <string name="type_ground">Ground</string>
+    <string name="type_ice">Ice</string>
+    <string name="type_normal">Normal</string>
+    <string name="type_poison">Posion</string>
+    <string name="type_psychic">Psychic</string>
+    <string name="type_rock">Rock</string>
+    <string name="type_steel">Steel</string>
+    <string name="type_water">Water</string>
 
 </resources>

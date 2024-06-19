@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PokedexApp</string>
+    <string name="title_activity_splash">PokedexApp</string>
+    <string name="title_activity_home">Home</string>
+
+    <string name="loading">Cargando...</string>
+    <string name="download">Descargando nuevos pokemons...</string>
+    <string name="dowload_error">Ocurrio un error al descargar nuevos pokemons</string>
+    <string name="notification_channel_name">Canal de notificaciones PokedexApp</string>
+    <string name="notification_channel_description">Canal que notifica nuevos pokemons descargados en memoria local</string>
+    <string name="download_success">Descarga exitosa!</string>
+    <string name="notification_success_text">Hay nuevos pokemons disponibles!</string>
+    <string name="network_error">Error de conexión</string>
+    <string name="ok">Ok</string>
+    <string name="search_hint">Buscar pokemon por nombre…</string>
+    <string name="clear_filter">Limpiar busqueda</string>
+
+    <string name="pokemon_not_found">El pokemon que buscas no fue encontrado</string>
+    <string name="error_alert_title">Oops! Ocurrio un error</string>
+
+
+    <string name="type_bug">Bicho</string>
+    <string name="type_dark">Siniestro</string>
+    <string name="type_dragon">Dragón</string>
+    <string name="type_electric">Electrico</string>
+    <string name="type_fairy">Hada</string>
+    <string name="type_fighting">Lucha</string>
+    <string name="type_fire">Fuego</string>
+    <string name="type_flying">Volador</string>
+    <string name="type_ghost">Fantasma</string>
+    <string name="type_grass">Planta</string>
+    <string name="type_ground">Tierra</string>
+    <string name="type_ice">Hielo</string>
+    <string name="type_normal">Normal</string>
+    <string name="type_poison">Veneno</string>
+    <string name="type_psychic">Psiquico</string>
+    <string name="type_rock">Roca</string>
+    <string name="type_steel">Acero</string>
+    <string name="type_water">Agua</string>
+
+</resources>

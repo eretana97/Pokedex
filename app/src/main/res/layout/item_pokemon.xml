@@ -1,87 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <com.google.android.material.card.MaterialCardView
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        >
+        android:layout_width="match_parent"
+        app:cardCornerRadius="8dp"
+        android:clickable="true"
+        android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:background="#fc503c"
-            android:id="@+id/pokemon_card"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_toRightOf="@id/pokemon_sprite"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/pokemon_order"
+
+            <LinearLayout
+                android:id="@+id/pokemon_card"
+                android:layout_toLeftOf="@id/pokemon_sprite"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="006"
-                android:textStyle="bold"
-                android:layout_marginStart="137dp"
-                android:textColor="@color/white"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:padding="16dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/pokemon_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="#0006"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/pokemon_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Charizard"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="Ataque:"
+                        android:layout_marginTop="16dp"
+                        />
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_stat_attack"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#fc503c"
+                        android:progress="50"
+                        app:indicatorColor="@color/pb_attack_color"
+                        app:trackCornerRadius="4dp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="Defensa:"
+                        android:layout_marginTop="4dp"
+
+                        />
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_stat_defense"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#fc503c"
+                        android:progress="50"
+                        app:indicatorColor="@color/pb_defense_color"
+                        app:trackCornerRadius="4dp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="Velocidad:"
+                        android:layout_marginTop="4dp"
+                        />
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_stat_speed"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:progress="50"
+                        app:indicatorColor="@color/pb_speed_color"
+                        app:trackCornerRadius="4dp"
+                        />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/pokemon_line"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:layout_below="@id/pokemon_card"
+                android:paddingStart="16dp"
+                android:background="@drawable/shape_card_line"
+                tools:ignore="RtlSymmetry">
+
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_type_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    app:chipStrokeWidth="0dp"
+                    />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_type_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    app:chipStrokeWidth="0dp"
+                    android:layout_marginStart="8dp"
+                    />
+
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/pokemon_card_floor"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_below="@id/pokemon_line"
                 />
+
+
+            <ImageView
+                android:id="@+id/pokemon_sprite"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:src="@drawable/charizard"
+                android:layout_alignParentEnd="true"
+                android:layout_above="@id/pokemon_card_floor"
+                />
+
 
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/pokemon_sprite"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/charizard"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <TextView
-            android:id="@+id/pokemon_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/pokemon_sprite"
-            android:text="Charizard"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginStart="16dp"
-            android:layout_above="@id/pokemon_card"
-            />
-
-
-
-        <ImageView
-            android:id="@+id/pokemon_type_slot1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/type_fire"
-            />
-
-        <ImageView
-            android:id="@+id/pokemon_type_slot2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/type_flying"
-            />
 
 
 
 
-
-    </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 
 

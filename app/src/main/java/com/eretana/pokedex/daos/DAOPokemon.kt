@@ -14,7 +14,7 @@ interface DAOPokemon {
     suspend fun insertAll(pokemons: List<Pokemon>)
 
     @Query("Select * from pokemons order by id asc")
-    suspend fun getAllPokemons(): List<Pokemon>
+    fun getAllPokemons(): Flow<List<Pokemon>>
 
     @Query("DELETE FROM pokemons")
     suspend fun deleteAllPokemons()

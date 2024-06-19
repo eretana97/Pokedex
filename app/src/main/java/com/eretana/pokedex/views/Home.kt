@@ -1,16 +1,13 @@
 package com.eretana.pokedex.views
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.AbsListView.OnScrollListener
-import androidx.activity.ComponentActivity
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.eretana.pokedex.R
 import com.eretana.pokedex.viewmodel.VMHome
 import com.eretana.pokedex.adapters.PokedexAdapter
@@ -22,92 +19,116 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.search.SearchBar
+import com.google.android.material.search.SearchView
 
-class Home : ComponentActivity() {
+class Home : AppCompatActivity() {
     private lateinit var vmhome: ViewModel
     private lateinit var adapter: PokedexAdapter
     private lateinit var rcv : RecyclerView
     private lateinit var dao : DAOPokemon
     private lateinit var service : Intent
+    private lateinit var searchview : SearchView
+    private lateinit var searchbar : SearchBar
+    private lateinit var btn_clear : MaterialButton
 
-    private var isLoading : Boolean = false
+    private var isSearching : Boolean = false
+    private var isSubmit: Boolean = false
+    private val searchResults = mutableListOf<Pokemon>()
+    private var pokemons = mutableListOf<Pokemon>()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+
         //Iniciamos variables y objetos
-        vmhome = VMHome()
+        vmhome = VMHome(this)
         rcv = findViewById(R.id.rcv_pokedex)
         adapter = PokedexAdapter(mutableListOf())
         dao = RoomDB.getDatabase(this).pokemonDAO()
         service = Intent(this, ServicePokedexUpdate::class.java)
+        searchview = findViewById(R.id.search_view)
+        searchbar = findViewById(R.id.search_bar)
+        btn_clear = findViewById(R.id.btn_clear)
 
 
         //Eliminar los registros para iniciar de 0
         deletePokemonsBackup()
-        //Iniciar el observador de scroll del rcv
-        initScrollListener()
-
 
         rcv.layoutManager = LinearLayoutManager(this)
         rcv.adapter = adapter
 
 
+        searchview.editText.setOnEditorActionListener { v, actionId, event ->
+            if(!isSubmit){
+                (vmhome as VMHome).getPokemonByName(v!!.text.toString())
+                isSearching = true
+                isSubmit = true
+                searchview.hide()
+                searchview.postDelayed({isSubmit = false},1000)
+            }
+            true
+        }
 
-
-        (vmhome as VMHome).observerPokemonRows().observe(this, Observer { pokemons ->
+        btn_clear.setOnClickListener {
+            searchResults.clear()
+            isSearching = false
             adapter.updateItems(pokemons)
-            saveOnLocalDB(pokemons)
+        }
+
+
+
+        (vmhome as VMHome).observerPokemonFromApi().observe(this) { results ->
+            adapter.updateItems(results)
+            saveOnLocalDB(results)
             startBackgroundService()
-        })
+        }
+
+        (vmhome as VMHome).localPokemonList.observe(this) { results ->
+            if (!isSearching) {
+                pokemons.clear()
+                pokemons.addAll(results)
+                adapter.updateItems(results)
+            }
+        }
+
+        (vmhome as VMHome).observerPokemonByName().observe(this) { pokemon ->
+            searchResults.clear()
+            searchResults.add(pokemon)
+            adapter.updateItems(searchResults)
+        }
+
+
+        (vmhome as VMHome).error.observe(this) { e ->
+            if (e.isNotEmpty()) showErrorAlert(e)
+        }
 
         //Traemos los primeros 15 pokemons
         (vmhome as VMHome).getPokemons()
 
-
     }
 
-    private fun initScrollListener(){
 
-        rcv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                Log.d("SCROLL",newState.toString())
-
-                val linearLayoutManager = recyclerView.layoutManager as? LinearLayoutManager
-
-                if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == adapter.itemCount - 1) {
-                        getNewPokemons()
-                        isLoading = true
-                    }
-                }
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-            }
-        })
-
+    private fun showErrorAlert(text: String){
+        AlertDialog.Builder(this)
+            .setTitle(R.string.error_alert_title)
+            .setMessage(text)
+            .setPositiveButton(R.string.ok,null)
+            .show()
     }
 
     private fun deletePokemonsBackup(){
-
         CoroutineScope(Dispatchers.IO).launch {
             dao.deleteAllPokemons()
         }
     }
 
     private fun saveOnLocalDB(pokemons: List<Pokemon>){
-
         CoroutineScope(Dispatchers.IO).launch {
             dao.insertAll(pokemons)
-            val count : Int = dao.getAllPokemons().size
-            Log.d("HOME","POKEMON SAVED: " + count)
         }
     }
 
@@ -116,18 +137,6 @@ class Home : ComponentActivity() {
             delay(30000L)
             startService(service)
         }
-    }
-
-    private fun getNewPokemons(){
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val newpokemons = dao.getAllPokemons()
-            withContext(Dispatchers.Main){
-                adapter.updateItems(newpokemons)
-                isLoading = false
-            }
-        }
-
     }
 
 }

@@ -16,9 +16,9 @@ interface Endpoints {
         @Query("offset") offset: Int
     ): Call<PokemonResult>;
 
-    @GET("pokemon/{id}")
-    fun getPokemon(
-        @Path("id") id: Int
+    @GET("pokemon/{name}")
+    fun getPokemonByName(
+        @Path("name") name: String
     ): Call<Pokemon>
 
     @GET
