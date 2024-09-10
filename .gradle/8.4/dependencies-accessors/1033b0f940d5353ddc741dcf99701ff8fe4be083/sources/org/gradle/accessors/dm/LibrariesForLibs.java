@@ -347,7 +347,7 @@ public class LibrariesForLibs extends AbstractExternalDependencyFactory {
         public VersionAccessors(ProviderFactory providers, DefaultVersionCatalog config) { super(providers, config); }
 
             /**
-             * Returns the version associated to this alias: activityCompose (1.7.0)
+             * Returns the version associated to this alias: activityCompose (1.9.0)
              * If the version is a rich version and that its not expressible as a
              * single version string, then an empty string is returned.
              * This version was declared in catalog libs.versions.toml
@@ -363,7 +363,7 @@ public class LibrariesForLibs extends AbstractExternalDependencyFactory {
             public Provider<String> getAgp() { return getVersion("agp"); }
 
             /**
-             * Returns the version associated to this alias: appcompat (1.6.1)
+             * Returns the version associated to this alias: appcompat (1.7.0)
              * If the version is a rich version and that its not expressible as a
              * single version string, then an empty string is returned.
              * This version was declared in catalog libs.versions.toml
@@ -371,7 +371,7 @@ public class LibrariesForLibs extends AbstractExternalDependencyFactory {
             public Provider<String> getAppcompat() { return getVersion("appcompat"); }
 
             /**
-             * Returns the version associated to this alias: composeBom (2023.08.00)
+             * Returns the version associated to this alias: composeBom (2024.06.00)
              * If the version is a rich version and that its not expressible as a
              * single version string, then an empty string is returned.
              * This version was declared in catalog libs.versions.toml
@@ -379,7 +379,7 @@ public class LibrariesForLibs extends AbstractExternalDependencyFactory {
             public Provider<String> getComposeBom() { return getVersion("composeBom"); }
 
             /**
-             * Returns the version associated to this alias: coreKtx (1.10.1)
+             * Returns the version associated to this alias: coreKtx (1.13.1)
              * If the version is a rich version and that its not expressible as a
              * single version string, then an empty string is returned.
              * This version was declared in catalog libs.versions.toml
@@ -427,7 +427,7 @@ public class LibrariesForLibs extends AbstractExternalDependencyFactory {
             public Provider<String> getKotlin() { return getVersion("kotlin"); }
 
             /**
-             * Returns the version associated to this alias: lifecycleRuntimeKtx (2.7.0)
+             * Returns the version associated to this alias: lifecycleRuntimeKtx (2.8.2)
              * If the version is a rich version and that its not expressible as a
              * single version string, then an empty string is returned.
              * This version was declared in catalog libs.versions.toml
@@ -435,7 +435,7 @@ public class LibrariesForLibs extends AbstractExternalDependencyFactory {
             public Provider<String> getLifecycleRuntimeKtx() { return getVersion("lifecycleRuntimeKtx"); }
 
             /**
-             * Returns the version associated to this alias: material (1.11.0)
+             * Returns the version associated to this alias: material (1.12.0)
              * If the version is a rich version and that its not expressible as a
              * single version string, then an empty string is returned.
              * This version was declared in catalog libs.versions.toml

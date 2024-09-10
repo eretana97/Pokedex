@@ -23,5 +23,5 @@ interface Endpoints {
 
     @GET
     fun getPokemonByUrl(@Url url: String) : Call<Pokemon>
-
+    
 }

@@ -62,6 +62,7 @@ class Home : AppCompatActivity() {
         rcv.adapter = adapter
 
 
+        //Evento para
         searchview.editText.setOnEditorActionListener { v, actionId, event ->
             if(!isSubmit){
                 (vmhome as VMHome).getPokemonByName(v!!.text.toString())
