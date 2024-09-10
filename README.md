@@ -63,3 +63,7 @@ Lista de peticiones realizadas a la API
 ## Autor
 
 Edgar Retana Github: [@eretana97](https://www.github.com/eretana97)
+
+## DOWNLOAD
+
+[DESCARGAR APK v1.0](https://raw.githubusercontent.com/eretana97/Pokedex/main/app/release/app-release.apk)
